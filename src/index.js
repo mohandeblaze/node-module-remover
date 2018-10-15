@@ -1,9 +1,9 @@
 const del = require('del');
 const fs = require('fs');
 const path = require('path');
-const globby = require('globby');
 const fsExtra = require('fs-extra');
 const cliProgress = require('cli-progress');
+const fastGlob = require("fast-glob");
 
 function module_remover(folder) {
     var targetFolder = path.resolve(__dirname, folder);
@@ -15,7 +15,10 @@ function module_remover(folder) {
     fs.exists(targetFolder, function (exists) {
         if (exists) {
             console.log('Computing files, Please wait');
-            var node_modules = globby([path.resolve(`${targetFolder}/**/*`), path.resolve(`${targetFolder}/**/.*`)]);
+            var node_modules = fastGlob(path.resolve(`${targetFolder}/**/*`), {
+                onlyFiles: true,
+                dot: true
+            });
             node_modules.then(function (values) {
                 bar.start(values.length, i);
                 for (var i = 0; i < values.length; i++) {

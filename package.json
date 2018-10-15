@@ -1,6 +1,6 @@
 {
   "name": "node-modules-remover",
-  "version": "1.0.31",
+  "version": "1.0.33",
   "description": "Used to remove the node_modules folder and other regular folders using Node.js..",
   "main": "src/index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "dependencies": {
     "cli-progress": "^2.1.0",
     "del": "^3.0.0",
+    "fast-glob": "^2.2.3",
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
     "path": "^0.12.7"
