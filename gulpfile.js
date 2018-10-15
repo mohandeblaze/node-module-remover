@@ -15,5 +15,6 @@ gulp.task('publish', function (done) {
     shell.exec('npm publish', {
         silent: false
     });
+	
     done();
 })
