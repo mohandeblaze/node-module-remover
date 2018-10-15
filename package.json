@@ -1,6 +1,6 @@
 {
   "name": "node-modules-remover",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Used to remove node_module folder and other directories too",
   "main": "src/index.js",
   "scripts": {
