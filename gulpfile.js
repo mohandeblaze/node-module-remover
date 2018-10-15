@@ -2,7 +2,7 @@ var gulp = require('gulp');
 const fsExtra = require('fs-extra');
 const shell = require('shelljs');
 
-gulp.task('publish', function (done) {
+gulp.task('publish', function () {
     var packageJson = fsExtra.readJsonSync('package.json');
     var version = parseInt(packageJson.version.split('.')[2]);
     version = (++version).toString();
@@ -15,6 +15,4 @@ gulp.task('publish', function (done) {
     shell.exec('npm publish', {
         silent: false
     });
-	
-    done();
 })

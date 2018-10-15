@@ -1,7 +1,7 @@
 {
   "name": "node-modules-remover",
-  "version": "1.0.28",
-  "description": "Used to remove node_module folder and other directories too",
+  "version": "1.0.30",
+  "description": "Used to remove node_module folder and other regular directories.",
   "main": "src/index.js",
   "scripts": {
     "test": "node --inspect-brk ./test.js",
