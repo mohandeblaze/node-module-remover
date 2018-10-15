@@ -1,0 +1,30 @@
+{
+  "name": "node-modules-remover",
+  "version": "1.0.18",
+  "description": "Used to remove node_module folder and other directories too",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --inspect-brk ./test.js"
+  },
+  "bin": {
+    "nmr": "./bin/module_remover.js"
+  },
+  "preferGlobal": true,
+  "keywords": [
+    "node_modules",
+    "del_node_module"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^2.1.0",
+    "del": "^3.0.0",
+    "fs-extra": "^7.0.0",
+    "globby": "^8.0.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "shelljs": "^0.8.2"
+  }
+}
