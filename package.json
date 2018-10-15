@@ -1,6 +1,6 @@
 {
   "name": "node-modules-remover",
-  "version": "1.0.18",
+  "version": "1.0.21",
   "description": "Used to remove node_module folder and other directories too",
   "main": "src/index.js",
   "scripts": {
@@ -9,10 +9,15 @@
   "bin": {
     "nmr": "./bin/module_remover.js"
   },
+  "repository": {
+    "url": "https://github.com/mohandeblaze/node-module-remover.git"
+  },
   "preferGlobal": true,
   "keywords": [
     "node_modules",
-    "del_node_module"
+    "del",
+    "remove-node-module",
+    "node-modules-remover"
   ],
   "author": "",
   "license": "ISC",

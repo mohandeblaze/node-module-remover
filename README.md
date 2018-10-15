@@ -1,4 +1,4 @@
-# Module Remover
+# Node Modules Remover
 
 Used to remove the node_modules folder.
 
