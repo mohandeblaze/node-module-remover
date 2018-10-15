@@ -1,10 +1,11 @@
 {
   "name": "node-modules-remover",
-  "version": "1.0.23",
+  "version": "1.0.28",
   "description": "Used to remove node_module folder and other directories too",
   "main": "src/index.js",
   "scripts": {
-    "test": "node --inspect-brk ./test.js"
+    "test": "node --inspect-brk ./test.js",
+    "publish": "gulp publish"
   },
   "bin": {
     "nmr": "./bin/module_remover.js"
