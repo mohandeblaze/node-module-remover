@@ -4,6 +4,7 @@ const path = require('path');
 const fsExtra = require('fs-extra');
 const cliProgress = require('cli-progress');
 const fastGlob = require("fast-glob");
+const logUpdate = require('log-update');
 
 function module_remover(folder) {
     var targetFolder = path.resolve(__dirname, folder);
@@ -14,7 +15,8 @@ function module_remover(folder) {
     }, cliProgress.Presets.shades_classic);
     fs.exists(targetFolder, function (exists) {
         if (exists) {
-            console.log('Computing files, Please wait');
+            console.log(`In path -> ${targetFolder}`);
+            logUpdate('Computing files in async, Please wait');
             var node_modules = fastGlob(path.resolve(`${targetFolder}/**/*`), {
                 onlyFiles: true,
                 dot: true
@@ -31,11 +33,12 @@ function module_remover(folder) {
                 }, 500);
             })
             node_modules.catch(function (err) {
-                console.log(err);
+                logUpdate(err);
             })
         } else {
             console.log(`Folder doesn't exists -> ${folder}`);
         }
     })
+
 }
 module.exports = module_remover;
