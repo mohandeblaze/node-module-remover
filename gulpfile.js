@@ -13,6 +13,10 @@ gulp.task('publish', function () {
     fsExtra.writeJsonSync('package.json', packageJson, {
         spaces: 2
     });
+    
+    packageJson = fsExtra.readJsonSync('./package.json');
+version = parseInt(packageJson.version.split('.')[2]);
+        console.log(`Updated version is ${version.toString()}`);
 
     // shell.exec('npm publish', {
        // silent: false
