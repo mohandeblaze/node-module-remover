@@ -1,19 +1,11 @@
-sudo: false
-dist: trusty
-
 language: node_js
 node_js:
   - "8.11.1"
 
-script: echo "Running tests against $(node -v) ..."
+script: gulp publish
 
-jobs:
-  include:
-    - stage: gulp publish
-      node_js: "8"
-      script: echo "Deploying to npm ..."
-      deploy:
-        provider: npm
-        email: "mohandeblaze@gmail.com"
-        api_key: $API_TOKEN
-        on: master
+deploy:
+  provider: npm
+  email: "mohandeblaze@gmail.com"
+  api_key: $API_TOKEN
+  on: master
