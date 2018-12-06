@@ -1,4 +1,19 @@
+sudo: false
+dist: trusty
+
 language: node_js
 node_js:
- - 8.11.1
-script: gulp publish
+  - "8.11.1"
+
+script: echo "Running tests against $(node -v) ..."
+
+jobs:
+  include:
+    - stage: npm release
+      node_js: "8"
+      script: echo "Deploying to npm ..."
+      deploy:
+        provider: npm
+        email: "mohandeblaze@gmail.com"
+        api_key: $API_TOKEN
+        on: deploy-npm-release
