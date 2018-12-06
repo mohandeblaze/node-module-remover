@@ -12,7 +12,7 @@ gulp.task('publish', function () {
         spaces: 2
     });
 
-    shell.exec('npm publish', {
-        silent: false
-    });
+    // shell.exec('npm publish', {
+       // silent: false
+    // });
 })
