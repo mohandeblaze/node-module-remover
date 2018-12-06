@@ -16,4 +16,4 @@ jobs:
         provider: npm
         email: "mohandeblaze@gmail.com"
         api_key: $API_TOKEN
-        on: deploy-npm-release
+        on: master
