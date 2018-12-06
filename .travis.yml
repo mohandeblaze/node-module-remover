@@ -8,4 +8,5 @@ deploy:
   provider: npm
   email: "mohandeblaze@gmail.com"
   api_key: $API_TOKEN
+  skip_cleanup: true
   on: master
