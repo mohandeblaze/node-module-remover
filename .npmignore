@@ -2,3 +2,8 @@ node_modules/
 yarn.lock
 gulpfile.js
 yarn-error.log
+.travis.yml
+.prettierrc
+test.js
+README.md
+LICENSE
