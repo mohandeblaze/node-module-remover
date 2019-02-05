@@ -1,6 +1,5 @@
 const fs = require('fs-extra');
 const path = require('path');
-const child_process = require('child_process');
 const module_remover = require('../src/index');
 
 const targetFolder = process.cwd();
@@ -9,8 +8,6 @@ const targetFolder = process.cwd();
 const generator = async() => {
 
     const exists = fs.existsSync(targetFolder);
-    let command = "";
-    let goingToDelete = "(";
     if (exists) {
         const folders = await fs.readdir(targetFolder);
         for (let index = 0; index < folders.length; index++) {
