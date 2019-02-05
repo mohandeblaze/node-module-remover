@@ -1,44 +1,30 @@
-const del = require('del');
 const fs = require('fs');
 const path = require('path');
 const fsExtra = require('fs-extra');
-const cliProgress = require('cli-progress');
-const fastGlob = require("fast-glob");
-const logUpdate = require('log-update');
+const promisefied = require('util').promisify;
+const readline = require('readline');
 
-function module_remover(folder) {
-    var targetFolder = path.resolve(__dirname, folder);
-    const bar = new cliProgress.Bar({
-        format: 'Deleting [{bar}] {percentage}% | {value}/{total}',
-        barCompleteChar: '>',
-        barIncompleteChar: '-'
-    }, cliProgress.Presets.shades_classic);
-    fs.exists(targetFolder, function (exists) {
-        if (exists) {
-            console.log(`In path -> ${targetFolder}`);
-            logUpdate('Computing files in async, Please wait');
-            var node_modules = fastGlob(path.resolve(`${targetFolder}/**/*`), {
-                onlyFiles: true,
-                dot: true
-            });
-            node_modules.then(function (values) {
-                bar.start(values.length, i);
-                for (var i = 0; i < values.length; i++) {
-                    del.sync(values[i]);
-                    bar.update(i);
-                }
-                fsExtra.emptyDirSync(targetFolder);
-                setTimeout(function () {
-                    bar.stop();
-                }, 500);
-            })
-            node_modules.catch(function (err) {
-                logUpdate(err);
-            })
-        } else {
-            console.log(`Folder doesn't exists -> ${folder}`);
-        }
-    })
-
+function printOnSameLine(data) {
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0, null);
+    process.stdout.write(data);
 }
+
+const module_remover = async(folder) => {
+    let targetFolder = path.resolve(folder);
+    let exists = fsExtra.existsSync(targetFolder);
+    if (exists) {
+        let dir = await promisefied(fs.readdir)(targetFolder);
+        console.log('Please wait, deleting found folders', dir.length);
+        let len = dir.length;
+        for (let i = 0; i < dir.length; i++) {
+            const current = dir[i];
+            let pathValue = path.resolve(targetFolder, current);
+            printOnSameLine(`Deleting - ${--len} - ${pathValue.split(path.sep).pop()}`);
+            await fsExtra.remove(pathValue);
+        }
+        console.log("");
+    }
+}
+
 module.exports = module_remover;
