@@ -1,30 +1,54 @@
-const fs = require('fs');
 const path = require('path');
 const fsExtra = require('fs-extra');
-const promisefied = require('util').promisify;
 const readline = require('readline');
+const Glob = require('glob').Glob;
 
 function printOnSameLine(data) {
-    readline.clearLine(process.stdout, 0);
-    readline.cursorTo(process.stdout, 0, null);
-    process.stdout.write(data);
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0, null);
+  process.stdout.write(data);
 }
 
-const module_remover = async(folder) => {
-    let targetFolder = path.resolve(folder);
-    let exists = fsExtra.existsSync(targetFolder);
-    if (exists) {
-        let dir = await promisefied(fs.readdir)(targetFolder);
-        console.log('Please wait, deleting found folders', dir.length);
-        let len = dir.length;
-        for (let i = 0; i < dir.length; i++) {
-            const current = dir[i];
-            let pathValue = path.resolve(targetFolder, current);
-            printOnSameLine(`Deleting - ${--len} - ${pathValue.split(path.sep).pop()}`);
-            await fsExtra.remove(pathValue);
-        }
-        console.log("");
+let i;
+let currentBatchFiles;
+const module_remover = async folder => {
+  i = 0;
+  currentBatchFiles = [];
+  let targetFolder = path.resolve(folder);
+
+  let globInstance = new Glob(`${targetFolder}/**/*`, { nodir: true }, function(
+    err,
+    files
+  ) {
+    if (err) {
+      console.log(err);
+    } else {
+      printOnSameLine(`${targetFolder} - All files are deleted`);
+      console.log('');
+      printOnSameLine(`Cleaning up folders`);
+      fsExtra.removeSync(targetFolder);
     }
-}
+  });
+
+  globInstance.on('match', function(match) {
+    if (i == 30) {
+      globInstance.pause();
+
+      currentBatchFiles.forEach(async currentFile => {
+        printOnSameLine(`Deleting - ${currentFile.split('node_modules')[1]}`);
+        await fsExtra.remove(currentFile);
+      });
+      i = 0;
+      currentBatchFiles = [];
+      globInstance.resume();
+      printOnSameLine(
+        `Querying next batch of 30 files to avoid disk throttling`
+      );
+    } else {
+      currentBatchFiles.push(match);
+      i++;
+    }
+  });
+};
 
 module.exports = module_remover;
