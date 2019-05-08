@@ -16,7 +16,7 @@ const module_remover = async folder => {
   currentBatchFiles = [];
   let targetFolder = path.resolve(folder);
 
-  let globInstance = new Glob(`${targetFolder}/**/*`, { nodir: true }, function(
+  let globInstance = new Glob(`${targetFolder}/**/*`, { nodir: true }, function (
     err,
     files
   ) {
@@ -24,26 +24,32 @@ const module_remover = async folder => {
       console.log(err);
     } else {
       printOnSameLine(`${targetFolder} - All files are deleted`);
-      console.log('');
-      printOnSameLine(`Cleaning up folders`);
+      printOnSameLine(`Cleaning up empty folders`);
       fsExtra.removeSync(targetFolder);
     }
+    console.log('');
+
   });
 
-  globInstance.on('match', function(match) {
-    if (i == 30) {
+  globInstance.on('match', function (match) {
+    if (i == 15) {
       globInstance.pause();
 
       currentBatchFiles.forEach(async currentFile => {
-        printOnSameLine(`Deleting - ${currentFile.split('node_modules')[1]}`);
-        await fsExtra.remove(currentFile);
+        printOnSameLine(
+          `Deleting - ${
+          currentFile.split('node_modules')[1]
+            ? 'node_modules/' + currentFile.split('node_modules')[1].split('/')[1]
+            : path.resolve(currentFile).split(process.cwd())[1]
+          }`
+        );
+        try {
+          await fsExtra.remove(currentFile);
+        } catch (error) { }
       });
       i = 0;
       currentBatchFiles = [];
       globInstance.resume();
-      printOnSameLine(
-        `Querying next batch of 30 files to avoid disk throttling`
-      );
     } else {
       currentBatchFiles.push(match);
       i++;
