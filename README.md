@@ -6,6 +6,10 @@ NPM: `npm i -g node-modules-remover`
 
 Yarn: `yarn global add node-modules-remover`
 
+## Glob Querying
+
+* All the files will be fetched using Glob and queried in a batch of 15 files to avoid disk throttling. 
+
 ## Usage
 
 ### CLI
