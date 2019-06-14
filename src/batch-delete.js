@@ -12,16 +12,19 @@ const generator = async () => {
     for (let index = 0; index < folders.length; index++) {
       const folder = folders[index];
       const resolvedPath = path.resolve(targetFolder, folder);
-      const details = fs.lstatSync(path.resolve(targetFolder, folder));
-      const currentTarget = path.resolve(`${resolvedPath}`);
-      if (details.isDirectory()) {
-        if (await fs.exists(`${currentTarget}/node_modules`)) {
-          await module_remover(`${currentTarget}/node_modules`);
-        }
-        await module_remover(currentTarget);
-      } else if (details.isFile()) {
-        await fs.remove(currentTarget);
-      }
+	  try {
+		  const details = fs.lstatSync(path.resolve(targetFolder, folder));
+		  const currentTarget = path.resolve(`${resolvedPath}`);
+		  if (details.isDirectory()) {
+			if (await fs.exists(`${currentTarget}/node_modules`)) {
+			  await module_remover(`${currentTarget}/node_modules`);
+			}
+			await module_remover(currentTarget);
+		  } else if (details.isFile()) {
+			await fs.remove(currentTarget);
+		  }
+	  } catch(e) {
+	  }
     }
   }
 };

@@ -25,7 +25,11 @@ const module_remover = async folder => {
     } else {
       printOnSameLine(`${targetFolder} - All files are deleted`);
       printOnSameLine(`Cleaning up empty folders`);
-      fsExtra.removeSync(targetFolder);
+	  try {
+		fsExtra.removeSync(targetFolder);
+	  } catch(e) {
+		  
+	  }
     }
     console.log('');
 
