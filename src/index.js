@@ -28,7 +28,7 @@ const module_remover = async folder => {
 	  try {
 		fsExtra.removeSync(targetFolder);
 	  } catch(e) {
-		  
+
 	  }
     }
     console.log('');
