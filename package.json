@@ -28,7 +28,7 @@
     "log-update": "^4.0.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^5.0.1",
     "shelljs": "^0.8.2"
   }
 }
